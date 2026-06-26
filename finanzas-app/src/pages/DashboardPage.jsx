@@ -34,15 +34,7 @@ export function DashboardPage() {
 
   return (
     <div className="p-6 max-w-5xl mx-auto">
-      <div className="flex items-center justify-between mb-6">
-        <h1 className="text-2xl font-bold text-gray-800">📊 Dashboard</h1>
-        <div className="flex items-center gap-3">
-          <span className="text-sm text-gray-500 hidden sm:inline">{user?.email}</span>
-          <button onClick={logout} className="text-sm text-red-500 hover:text-red-700 font-medium">
-            Cerrar sesión
-          </button>
-        </div>
-      </div>
+      <h1 className="text-2xl font-bold text-gray-800 mb-6">📊 Dashboard</h1>
 
       <PeriodFilter
         periodo={periodo}

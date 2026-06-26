@@ -10,7 +10,7 @@ const TABS = [
 
 export function TabBar() {
   return (
-    <nav className="bg-white border-t border-gray-100 shadow-lg fixed bottom-0 left-0 right-0 md:static md:border-b md:border-t-0 md:shadow-sm">
+    <nav className="fixed bottom-0 left-0 right-0 z-20 bg-white border-t border-gray-100 shadow-lg md:static md:border-b md:border-t-0 md:shadow-sm md:order-first">
       <div className="flex justify-around md:justify-center md:gap-8 max-w-2xl mx-auto px-4 py-2 md:py-3">
         {TABS.map((tab) => (
           <NavLink
