@@ -4,12 +4,12 @@ import { useIncomes } from "../../hooks/useIncomes";
 import { fechaLocalISO } from "../../utils/dateHelpers";
 
 const FUENTES = [
-  { id: "sueldo", label: "💼 Sueldo" },
-  { id: "inversiones", label: "📈 Inversiones" },
-  { id: "ventas", label: "🛍️ Ventas" },
-  { id: "freelance", label: "💻 Freelance / Independiente" },
-  { id: "regalo", label: "🎁 Regalo" },
-  { id: "otros", label: "📦 Otros" },
+  { id: "sueldo", label: "Sueldo" },
+  { id: "inversiones", label: "Inversiones" },
+  { id: "ventas", label: "Ventas" },
+  { id: "freelance", label: "Freelance / Independiente" },
+  { id: "regalo", label: "Regalo" },
+  { id: "otros", label: "Otros" },
 ];
 
 const ESTADO_INICIAL = {

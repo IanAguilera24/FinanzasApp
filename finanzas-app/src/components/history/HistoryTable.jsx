@@ -4,6 +4,7 @@ import { useHistory } from "../../hooks/useHistory";
 import { useUserProfile } from "../../hooks/useUserProfile";
 import { EditableCell } from "./EditableCell";
 import { formatFecha, fechaParaInput } from "../../utils/formatters";
+import { Trash2 } from "lucide-react";
 
 const METODOS_PAGO = [
   { id: "efectivo", label: "Efectivo" },
@@ -152,12 +153,8 @@ export function HistoryTable() {
                   />
                 </td>
                 <td className="px-3">
-                  <button
-                    onClick={() => handleDelete(record)}
-                    className="text-gray-400 hover:text-red-500 transition"
-                    title="Eliminar"
-                  >
-                    🗑️
+                  <button onClick={() => handleDelete(record)} className="text-gray-400 hover:text-red-500 transition" title="Eliminar">
+                    <Trash2 size={16} />
                   </button>
                 </td>
               </tr>

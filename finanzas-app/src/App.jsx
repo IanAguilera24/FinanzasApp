@@ -4,9 +4,8 @@ import { AuthProvider } from "./context/AuthContext";
 import { ProtectedRoute } from "./components/common/ProtectedRoute";
 import { AppLayout } from "./components/common/AppLayout";
 import { LoginPage } from "./pages/LoginPage";
-import { ExpensesPage } from "./pages/ExpensesPage";
+import { MovimientosPage } from "./pages/MovimientosPage";
 import { DashboardPage } from "./pages/DashboardPage";
-import { IncomesPage } from "./pages/IncomesPage";
 import { HistoryPage } from "./pages/HistoryPage";
 
 function App() {
@@ -27,21 +26,11 @@ function App() {
             }
           />
           <Route
-            path="/gastos"
+            path="/movimientos"
             element={
               <ProtectedRoute>
                 <AppLayout>
-                  <ExpensesPage />
-                </AppLayout>
-              </ProtectedRoute>
-            }
-          />
-          <Route
-            path="/ingresos"
-            element={
-              <ProtectedRoute>
-                <AppLayout>
-                  <IncomesPage />
+                  <MovimientosPage />
                 </AppLayout>
               </ProtectedRoute>
             }

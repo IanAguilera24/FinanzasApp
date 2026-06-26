@@ -4,12 +4,11 @@ import { TabBar } from "./TabBar";
 
 export function AppLayout({ children }) {
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-gray-50 flex flex-col">
       <AppHeader />
-      {/* pt-16 deja espacio para el header fijo de arriba (h-16 aprox) */}
-      {/* pb-24 deja espacio para el TabBar fijo de abajo en móvil */}
-      <main className="pt-16 pb-24 md:pb-6">{children}</main>
       <TabBar />
+      {/* pb-20 solo aplica en móvil, donde el TabBar es fixed abajo */}
+      <main className="flex-1 pb-20 md:pb-6">{children}</main>
     </div>
   );
 }

@@ -5,10 +5,10 @@ import { CategorySelector } from "./CategorySelector";
 import { fechaLocalISO } from "../../utils/dateHelpers";
 
 const METODOS_PAGO = [
-  { id: "efectivo", label: "💵 Efectivo" },
-  { id: "tarjeta_credito", label: "💳 Tarjeta de Crédito" },
-  { id: "tarjeta_debito", label: "💳 Tarjeta de Débito" },
-  { id: "transferencia", label: "🏦 Transferencia" },
+  { id: "efectivo", label: "Efectivo" },
+  { id: "tarjeta_credito", label: "Tarjeta de Crédito" },
+  { id: "tarjeta_debito", label: "Tarjeta de Débito" },
+  { id: "transferencia", label: "Transferencia" },
 ];
 
 const ESTADO_INICIAL = {
