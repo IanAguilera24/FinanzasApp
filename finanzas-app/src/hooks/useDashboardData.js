@@ -43,7 +43,7 @@ export function useDashboardData(periodo, fechaReferencia, modoBalance = "period
   );
   const balance = totalIngresos - totalGastos;
 
-  // Para el donut: agrupa gastos por categoría
+  // Agrupa gastos por categoría
   const gastosPorCategoria = useMemo(() => {
     const mapa = {};
     gastosEnRango.forEach((t) => {
@@ -51,6 +51,20 @@ export function useDashboardData(periodo, fechaReferencia, modoBalance = "period
     });
     return Object.entries(mapa).map(([categoria, monto]) => ({ categoria, monto }));
   }, [gastosEnRango]);
+
+  // Agrupa gastos por método de pago
+  const gastosPorMetodoPago = useMemo(() => {
+    const mapa = {};
+    gastosEnRango.forEach((t) => {
+      mapa[t.metodoPago] = (mapa[t.metodoPago] || 0) + t.monto;
+    });
+    return Object.entries(mapa).map(([metodoPago, monto]) => ({ metodoPago, monto }));
+  }, [gastosEnRango]);
+
+  // Top 5 categorías con mayor gasto, ya ordenadas descendente
+  const topCategorias = useMemo(() => {
+    return [...gastosPorCategoria].sort((a, b) => b.monto - a.monto).slice(0, 5);
+  }, [gastosPorCategoria]);
 
   // Para la línea de evolución: combina gastos e ingresos día por día
   const evolucionBalance = useMemo(() => {
@@ -90,6 +104,8 @@ export function useDashboardData(periodo, fechaReferencia, modoBalance = "period
     totalIngresos,
     balance,
     gastosPorCategoria,
+    gastosPorMetodoPago,    
+    topCategorias,
     evolucionBalance,
     cantidadRegistros: gastosEnRango.length + ingresosEnRango.length,
   };
