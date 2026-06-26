@@ -1,5 +1,7 @@
 @import "tailwindcss";
 
+@custom-variant dark (&:where(.dark, .dark *));
+
 :root {
   --color-primary: #7c3aed;
   --color-primary-hover: #6d28d9;
@@ -8,9 +10,12 @@
 }
 
 .dark {
-  --color-bg: #0f172a;
-  --color-surface: #1e293b;
-  --color-text: #f1f5f9;
+  --color-surface-active: #334155;
+  --color-grid: #334155;
+  --color-axis: #94a3b8;
+  --color-tooltip-bg: #1e293b;
+  --color-tooltip-border: #334155;
+  --color-tooltip-text: #f1f5f9;
 }
 
 .btn-primary {

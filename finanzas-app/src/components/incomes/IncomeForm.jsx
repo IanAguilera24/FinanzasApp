@@ -20,6 +20,9 @@ const ESTADO_INICIAL = {
   recurrente: false,
 };
 
+const inputClass =
+  "w-full px-4 py-2.5 rounded-lg border border-gray-200 dark:border-slate-600 bg-white dark:bg-slate-700 text-gray-800 dark:text-slate-100 focus:outline-none focus:ring-2 focus:ring-emerald-400";
+
 export function IncomeForm() {
   const [form, setForm] = useState(ESTADO_INICIAL);
   const [submitting, setSubmitting] = useState(false);
@@ -62,11 +65,13 @@ export function IncomeForm() {
   }
 
   return (
-    <form onSubmit={handleSubmit} className="bg-white rounded-2xl shadow-sm p-6 max-w-md mx-auto space-y-4">
+    <form onSubmit={handleSubmit} className="bg-white dark:bg-slate-800 rounded-2xl shadow-sm p-6 max-w-md mx-auto space-y-4">
       {feedback && (
         <div
           className={`rounded-lg px-3 py-2 text-sm ${
-            feedback.type === "success" ? "bg-green-50 text-green-700" : "bg-red-50 text-red-600"
+            feedback.type === "success"
+              ? "bg-green-50 dark:bg-green-900/30 text-green-700 dark:text-green-300"
+              : "bg-red-50 dark:bg-red-900/30 text-red-600 dark:text-red-300"
           }`}
         >
           {feedback.text}
@@ -74,19 +79,19 @@ export function IncomeForm() {
       )}
 
       <div>
-        <label className="block text-sm font-medium text-gray-600 mb-1">Concepto</label>
+        <label className="block text-sm font-medium text-gray-600 dark:text-slate-300 mb-1">Concepto</label>
         <input
           type="text"
           placeholder="Ej. Sueldo junio"
           value={form.concepto}
           onChange={(e) => handleChange("concepto", e.target.value)}
           required
-          className="w-full px-4 py-2.5 rounded-lg border border-gray-200 focus:outline-none focus:ring-2 focus:ring-emerald-400"
+          className={inputClass}
         />
       </div>
 
       <div>
-        <label className="block text-sm font-medium text-gray-600 mb-1">Monto</label>
+        <label className="block text-sm font-medium text-gray-600 dark:text-slate-300 mb-1">Monto</label>
         <input
           type="number"
           step="0.01"
@@ -95,16 +100,16 @@ export function IncomeForm() {
           value={form.monto}
           onChange={(e) => handleChange("monto", e.target.value)}
           required
-          className="w-full px-4 py-2.5 rounded-lg border border-gray-200 focus:outline-none focus:ring-2 focus:ring-emerald-400"
+          className={inputClass}
         />
       </div>
 
       <div>
-        <label className="block text-sm font-medium text-gray-600 mb-1">Fuente de ingreso</label>
+        <label className="block text-sm font-medium text-gray-600 dark:text-slate-300 mb-1">Fuente de ingreso</label>
         <select
           value={form.fuente}
           onChange={(e) => handleChange("fuente", e.target.value)}
-          className="w-full px-4 py-2.5 rounded-lg border border-gray-200 focus:outline-none focus:ring-2 focus:ring-emerald-400 bg-white"
+          className={inputClass}
         >
           {FUENTES.map((f) => (
             <option key={f.id} value={f.id}>
@@ -115,22 +120,22 @@ export function IncomeForm() {
       </div>
 
       <div>
-        <label className="block text-sm font-medium text-gray-600 mb-1">Fecha</label>
+        <label className="block text-sm font-medium text-gray-600 dark:text-slate-300 mb-1">Fecha</label>
         <input
           type="date"
           value={form.fecha}
           onChange={(e) => handleChange("fecha", e.target.value)}
           required
-          className="w-full px-4 py-2.5 rounded-lg border border-gray-200 focus:outline-none focus:ring-2 focus:ring-emerald-400"
+          className={inputClass}
         />
       </div>
 
-      <label className="flex items-center gap-2 text-sm text-gray-600">
+      <label className="flex items-center gap-2 text-sm text-gray-600 dark:text-slate-300">
         <input
           type="checkbox"
           checked={form.recurrente}
           onChange={(e) => handleChange("recurrente", e.target.checked)}
-          className="w-4 h-4 rounded border-gray-300 text-emerald-600 focus:ring-emerald-400"
+          className="w-4 h-4 rounded border-gray-300 dark:border-slate-600 text-emerald-600 focus:ring-emerald-400"
         />
         Este ingreso es recurrente (ej. sueldo mensual)
       </label>

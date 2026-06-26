@@ -1,18 +1,11 @@
 // src/components/history/HistoryTable.jsx
 import { useState, useMemo } from "react";
-import { ConfirmModal } from "../common/ConfirmModal";
+import { Trash2 } from "lucide-react";
 import { useHistory } from "../../hooks/useHistory";
 import { useUserProfile } from "../../hooks/useUserProfile";
 import { EditableCell } from "./EditableCell";
-import { formatFecha, fechaParaInput } from "../../utils/formatters";
-import { Trash2 } from "lucide-react";
-
-const METODOS_PAGO = [
-  { id: "efectivo", label: "Efectivo" },
-  { id: "tarjeta_credito", label: "Tarjeta de Crédito" },
-  { id: "tarjeta_debito", label: "Tarjeta de Débito" },
-  { id: "transferencia", label: "Transferencia" },
-];
+import { fechaParaInput } from "../../utils/formatters";
+import { ConfirmModal } from "../common/ConfirmModal";
 
 const FUENTES = [
   { id: "sueldo", label: "Sueldo" },
@@ -58,7 +51,7 @@ export function HistoryTable() {
   }
 
   if (loading) {
-    return <p className="text-center text-gray-400 py-10">Cargando historial...</p>;
+    return <p className="text-center text-gray-400 dark:text-slate-500 py-10">Cargando historial...</p>;
   }
 
   return (
@@ -69,12 +62,12 @@ export function HistoryTable() {
           placeholder="Buscar por concepto o lugar..."
           value={busqueda}
           onChange={(e) => setBusqueda(e.target.value)}
-          className="flex-1 px-4 py-2 rounded-lg border border-gray-200 focus:outline-none focus:ring-2 focus:ring-violet-400"
+          className="flex-1 px-4 py-2 rounded-lg border border-gray-200 dark:border-slate-600 bg-white dark:bg-slate-800 text-gray-800 dark:text-slate-100 ring-primary"
         />
         <select
           value={filtroTipo}
           onChange={(e) => setFiltroTipo(e.target.value)}
-          className="px-4 py-2 rounded-lg border border-gray-200 focus:outline-none focus:ring-2 focus:ring-violet-400 bg-white"
+          className="px-4 py-2 rounded-lg border border-gray-200 dark:border-slate-600 bg-white dark:bg-slate-800 text-gray-800 dark:text-slate-100 ring-primary"
         >
           <option value="todos">Todos</option>
           <option value="gasto">Solo gastos</option>
@@ -82,10 +75,10 @@ export function HistoryTable() {
         </select>
       </div>
 
-      <div className="bg-white rounded-2xl shadow-sm overflow-x-auto">
+      <div className="bg-white dark:bg-slate-800 rounded-2xl shadow-sm overflow-x-auto">
         <table className="w-full text-sm">
           <thead>
-            <tr className="border-b border-gray-100 text-left text-gray-500">
+            <tr className="border-b border-gray-100 dark:border-slate-700 text-left text-gray-500 dark:text-slate-400">
               <th className="px-3 py-3 font-medium">Tipo</th>
               <th className="px-3 py-3 font-medium">Concepto</th>
               <th className="px-3 py-3 font-medium">Monto</th>
@@ -97,30 +90,23 @@ export function HistoryTable() {
           </thead>
           <tbody>
             {recordsFiltrados.map((record) => (
-              <tr key={`${record.tipo}-${record.id}`} className="border-b border-gray-50 hover:bg-gray-50/50">
+              <tr key={`${record.tipo}-${record.id}`} className="border-b border-gray-50 dark:border-slate-700/50 hover:bg-gray-50/50 dark:hover:bg-slate-700/30">
                 <td className="px-3 py-1">
                   <span
                     className={`text-xs font-semibold px-2 py-1 rounded-full ${
                       record.tipo === "gasto"
-                        ? "bg-red-50 text-red-600"
-                        : "bg-emerald-50 text-emerald-600"
+                        ? "bg-red-50 dark:bg-red-900/30 text-red-600 dark:text-red-300"
+                        : "bg-emerald-50 dark:bg-emerald-900/30 text-emerald-600 dark:text-emerald-300"
                     }`}
                   >
                     {record.tipo === "gasto" ? "Gasto" : "Ingreso"}
                   </span>
                 </td>
                 <td className="px-1">
-                  <EditableCell
-                    value={record.concepto}
-                    onSave={(val) => updateRecord(record, { concepto: val })}
-                  />
+                  <EditableCell value={record.concepto} onSave={(val) => updateRecord(record, { concepto: val })} />
                 </td>
                 <td className="px-1">
-                  <EditableCell
-                    value={record.monto}
-                    type="currency"
-                    onSave={(val) => updateRecord(record, { monto: val })}
-                  />
+                  <EditableCell value={record.monto} type="currency" onSave={(val) => updateRecord(record, { monto: val })} />
                 </td>
                 <td className="px-1">
                   {record.tipo === "gasto" ? (
@@ -141,12 +127,9 @@ export function HistoryTable() {
                 </td>
                 <td className="px-1">
                   {record.tipo === "gasto" ? (
-                    <EditableCell
-                      value={record.lugar}
-                      onSave={(val) => updateRecord(record, { lugar: val })}
-                    />
+                    <EditableCell value={record.lugar} onSave={(val) => updateRecord(record, { lugar: val })} />
                   ) : (
-                    <span className="px-2 py-1 text-gray-400">—</span>
+                    <span className="px-2 py-1 text-gray-400 dark:text-slate-500">—</span>
                   )}
                 </td>
                 <td className="px-1">
@@ -159,7 +142,7 @@ export function HistoryTable() {
                 <td className="px-3">
                   <button
                     onClick={() => handleDeleteClick(record)}
-                    className="text-gray-400 hover:text-red-500 transition"
+                    className="text-gray-400 dark:text-slate-500 hover:text-red-500 transition"
                     title="Eliminar"
                   >
                     <Trash2 size={16} />
@@ -169,24 +152,24 @@ export function HistoryTable() {
             ))}
           </tbody>
         </table>
-        
-        <ConfirmModal
-          open={!!registroAEliminar}
-          title="¿Eliminar este registro?"
-          message={
-            registroAEliminar
-              ? `Vas a eliminar "${registroAEliminar.concepto}" por $${registroAEliminar.monto}. Esta acción no se puede deshacer.`
-              : ""
-          }
-          confirmLabel="Eliminar"
-          onConfirm={confirmarEliminar}
-          onCancel={() => setRegistroAEliminar(null)}
-        />
 
         {recordsFiltrados.length === 0 && (
-          <p className="text-center text-gray-400 py-8">No hay registros que coincidan.</p>
+          <p className="text-center text-gray-400 dark:text-slate-500 py-8">No hay registros que coincidan.</p>
         )}
       </div>
+
+      <ConfirmModal
+        open={!!registroAEliminar}
+        title="¿Eliminar este registro?"
+        message={
+          registroAEliminar
+            ? `Vas a eliminar "${registroAEliminar.concepto}" por $${registroAEliminar.monto}. Esta acción no se puede deshacer.`
+            : ""
+        }
+        confirmLabel="Eliminar"
+        onConfirm={confirmarEliminar}
+        onCancel={() => setRegistroAEliminar(null)}
+      />
     </div>
   );
 }

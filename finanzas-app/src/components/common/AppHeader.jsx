@@ -1,7 +1,7 @@
 // src/components/common/AppHeader.jsx
 import { useState } from "react";
-import { Settings, LogOut } from "lucide-react";
 import { Link } from "react-router-dom";
+import { LogOut, Settings } from "lucide-react";
 import { useAuth } from "../../context/AuthContext";
 import { ConfirmModal } from "./ConfirmModal";
 
@@ -17,17 +17,26 @@ export function AppHeader() {
   }
 
   return (
-    <header className="sticky top-0 z-20 bg-white border-b border-gray-100 shadow-sm">
+    <header className="sticky top-0 z-20 bg-white dark:bg-slate-800 border-b border-gray-100 dark:border-slate-700 shadow-sm">
       <div className="max-w-5xl mx-auto px-4 py-3 flex items-center justify-between">
-        <span className="font-bold text-gray-800">FinanzasApp</span>
+        <span className="font-bold text-gray-800 dark:text-slate-100">FinanzasApp</span>
 
-        <div className="flex items-center gap-3">
-          <span className="text-sm text-gray-600 hidden sm:inline">
+        <div className="flex items-center gap-2">
+          <span className="text-sm text-gray-600 dark:text-slate-300 hidden sm:inline mr-1">
             Hola, {nombreMostrar}
           </span>
+
+          <Link
+            to="/configuracion"
+            className="flex items-center justify-center w-9 h-9 text-gray-500 dark:text-slate-400 hover:text-gray-700 dark:hover:text-slate-200 rounded-lg hover:bg-gray-100 dark:hover:bg-slate-700 transition"
+            title="Configuración"
+          >
+            <Settings size={18} />
+          </Link>
+
           <button
             onClick={() => setConfirmando(true)}
-            className="flex items-center gap-1.5 text-sm text-gray-500 hover:text-red-600 font-medium px-2 py-1.5 rounded-lg hover:bg-red-50 transition"
+            className="flex items-center gap-1.5 text-sm text-gray-500 dark:text-slate-400 hover:text-red-600 font-medium px-2 py-1.5 rounded-lg hover:bg-red-50 dark:hover:bg-red-950/30 transition"
             title="Cerrar sesión"
           >
             <LogOut size={16} />
@@ -36,14 +45,6 @@ export function AppHeader() {
         </div>
       </div>
 
-      <Link
-        to="/configuracion"
-        className="flex items-center gap-1.5 text-sm text-gray-500 hover:text-gray-700 font-medium px-2 py-1.5 rounded-lg hover:bg-gray-100 transition"
-        title="Configuración"
-      >
-        <Settings size={16} />
-      </Link>
-      
       <ConfirmModal
         open={confirmando}
         title="¿Cerrar sesión?"

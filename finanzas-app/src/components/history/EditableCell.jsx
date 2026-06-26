@@ -39,14 +39,14 @@ export function EditableCell({ value, onSave, type = "text", options = null }) {
     return (
       <div
         onClick={() => setEditing(true)}
-        className="px-2 py-1 rounded cursor-pointer hover:bg-violet-50 transition min-h-[28px]"
+        className="px-2 py-1 rounded cursor-pointer hover:bg-gray-100 dark:hover:bg-slate-700 transition min-h-[28px] text-gray-800 dark:text-slate-100"
         title="Clic para editar"
       >
         {options
           ? options.find((o) => o.id === value)?.label || value
           : type === "currency"
           ? new Intl.NumberFormat("es-MX", { style: "currency", currency: "MXN" }).format(value)
-          : value || <span className="text-gray-300">—</span>}
+          : value || <span className="text-gray-300 dark:text-slate-600">—</span>}
       </div>
     );
   }
@@ -59,7 +59,7 @@ export function EditableCell({ value, onSave, type = "text", options = null }) {
         onChange={(e) => setDraft(e.target.value)}
         onBlur={handleSave}
         onKeyDown={handleKeyDown}
-        className="w-full px-2 py-1 rounded border border-violet-400 focus:outline-none text-sm"
+        className="w-full px-2 py-1 rounded border border-gray-300 dark:border-slate-500 bg-white dark:bg-slate-700 text-gray-800 dark:text-slate-100 ring-primary text-sm"
       >
         {options.map((o) => (
           <option key={o.id} value={o.id}>
@@ -79,7 +79,7 @@ export function EditableCell({ value, onSave, type = "text", options = null }) {
       onChange={(e) => setDraft(e.target.value)}
       onBlur={handleSave}
       onKeyDown={handleKeyDown}
-      className="w-full px-2 py-1 rounded border border-violet-400 focus:outline-none text-sm"
+      className="w-full px-2 py-1 rounded border border-gray-300 dark:border-slate-500 bg-white dark:bg-slate-700 text-gray-800 dark:text-slate-100 ring-primary text-sm"
     />
   );
 }

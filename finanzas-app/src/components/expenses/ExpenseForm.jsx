@@ -20,6 +20,9 @@ const ESTADO_INICIAL = {
   categoria: "",
 };
 
+const inputClass =
+  "w-full px-4 py-2.5 rounded-lg border border-gray-200 dark:border-slate-600 bg-white dark:bg-slate-700 text-gray-800 dark:text-slate-100 focus:outline-none focus:ring-2 focus:ring-red-400";
+
 export function ExpenseForm() {
   const [form, setForm] = useState(ESTADO_INICIAL);
   const [submitting, setSubmitting] = useState(false);
@@ -62,11 +65,13 @@ export function ExpenseForm() {
   }
 
   return (
-    <form onSubmit={handleSubmit} className="bg-white rounded-2xl shadow-sm p-6 max-w-md mx-auto space-y-4">
+    <form onSubmit={handleSubmit} className="bg-white dark:bg-slate-800 rounded-2xl shadow-sm p-6 max-w-md mx-auto space-y-4">
       {feedback && (
         <div
           className={`rounded-lg px-3 py-2 text-sm ${
-            feedback.type === "success" ? "bg-green-50 text-green-700" : "bg-red-50 text-red-600"
+            feedback.type === "success"
+              ? "bg-green-50 dark:bg-green-900/30 text-green-700 dark:text-green-300"
+              : "bg-red-50 dark:bg-red-900/30 text-red-600 dark:text-red-300"
           }`}
         >
           {feedback.text}
@@ -74,19 +79,19 @@ export function ExpenseForm() {
       )}
 
       <div>
-        <label className="block text-sm font-medium text-gray-600 mb-1">Concepto</label>
+        <label className="block text-sm font-medium text-gray-600 dark:text-slate-300 mb-1">Concepto</label>
         <input
           type="text"
           placeholder="Ej. Café con leche"
           value={form.concepto}
           onChange={(e) => handleChange("concepto", e.target.value)}
           required
-          className="w-full px-4 py-2.5 rounded-lg border border-gray-200 focus:outline-none focus:ring-2 focus:ring-red-400"
+          className={inputClass}
         />
       </div>
 
       <div>
-        <label className="block text-sm font-medium text-gray-600 mb-1">Monto</label>
+        <label className="block text-sm font-medium text-gray-600 dark:text-slate-300 mb-1">Monto</label>
         <input
           type="number"
           step="0.01"
@@ -95,16 +100,16 @@ export function ExpenseForm() {
           value={form.monto}
           onChange={(e) => handleChange("monto", e.target.value)}
           required
-          className="w-full px-4 py-2.5 rounded-lg border border-gray-200 focus:outline-none focus:ring-2 focus:ring-red-400"
+          className={inputClass}
         />
       </div>
 
       <div>
-        <label className="block text-sm font-medium text-gray-600 mb-1">Método de pago</label>
+        <label className="block text-sm font-medium text-gray-600 dark:text-slate-300 mb-1">Método de pago</label>
         <select
           value={form.metodoPago}
           onChange={(e) => handleChange("metodoPago", e.target.value)}
-          className="w-full px-4 py-2.5 rounded-lg border border-gray-200 focus:outline-none focus:ring-2 focus:ring-red-400 bg-white"
+          className={inputClass}
         >
           {METODOS_PAGO.map((m) => (
             <option key={m.id} value={m.id}>
@@ -115,29 +120,29 @@ export function ExpenseForm() {
       </div>
 
       <div>
-        <label className="block text-sm font-medium text-gray-600 mb-1">Lugar de compra</label>
+        <label className="block text-sm font-medium text-gray-600 dark:text-slate-300 mb-1">Lugar de compra</label>
         <input
           type="text"
           placeholder="Ej. Starbucks Plaza Central"
           value={form.lugar}
           onChange={(e) => handleChange("lugar", e.target.value)}
-          className="w-full px-4 py-2.5 rounded-lg border border-gray-200 focus:outline-none focus:ring-2 focus:ring-red-400"
+          className={inputClass}
         />
       </div>
 
       <div>
-        <label className="block text-sm font-medium text-gray-600 mb-1">Fecha</label>
+        <label className="block text-sm font-medium text-gray-600 dark:text-slate-300 mb-1">Fecha</label>
         <input
           type="date"
           value={form.fecha}
           onChange={(e) => handleChange("fecha", e.target.value)}
           required
-          className="w-full px-4 py-2.5 rounded-lg border border-gray-200 focus:outline-none focus:ring-2 focus:ring-red-400"
+          className={inputClass}
         />
       </div>
 
       <div>
-        <label className="block text-sm font-medium text-gray-600 mb-1">Categoría</label>
+        <label className="block text-sm font-medium text-gray-600 dark:text-slate-300 mb-1">Categoría</label>
         <CategorySelector value={form.categoria} onChange={(value) => handleChange("categoria", value)} />
       </div>
 

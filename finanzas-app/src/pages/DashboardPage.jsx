@@ -34,7 +34,7 @@ export function DashboardPage() {
 
   return (
     <div className="p-6 max-w-5xl mx-auto">
-      <h1 className="text-2xl font-bold text-gray-800 mb-6">Dashboard</h1>
+      <h1 className="text-2xl font-bold text-gray-800 dark:text-slate-100 mb-6">Dashboard</h1>
 
       <PeriodFilter
         periodo={periodo}
