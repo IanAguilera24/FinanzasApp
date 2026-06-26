@@ -29,7 +29,7 @@ export function HistoryTable() {
   const [filtroTipo, setFiltroTipo] = useState("todos");
 
   const categoriaOptions = useMemo(
-    () => (profile?.categories || []).map((c) => ({ id: c.id, label: `${c.icono} ${c.nombre}` })),
+    () => (profile?.categories || []).map((c) => ({ id: c.id, label: c.nombre })),
     [profile]
   );
 
