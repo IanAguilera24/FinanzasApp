@@ -42,7 +42,7 @@ export function SettingsPage() {
         <p className="text-sm text-gray-500 dark:text-slate-400 mb-4">
           Inicias sesión con {user?.email}. Este nombre es solo para mostrarte un saludo personalizado.
         </p>
-        <form onSubmit={handleGuardarNombre} className="flex gap-3">
+        <form onSubmit={handleGuardarNombre} className="flex flex-col sm:flex-row gap-3">
           <input
             type="text"
             value={nombre}
@@ -53,7 +53,7 @@ export function SettingsPage() {
           <button
             type="submit"
             disabled={guardando}
-            className="btn-primary px-5 py-2.5 rounded-lg font-medium transition disabled:opacity-50"
+            className="btn-primary w-full sm:w-auto px-5 py-2.5 rounded-lg font-medium transition disabled:opacity-50"
           >
             {guardando ? "Guardando..." : "Guardar"}
           </button>
