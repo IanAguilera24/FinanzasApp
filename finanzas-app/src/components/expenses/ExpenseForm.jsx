@@ -23,7 +23,7 @@ const ESTADO_INICIAL = {
 export function ExpenseForm() {
   const [form, setForm] = useState(ESTADO_INICIAL);
   const [submitting, setSubmitting] = useState(false);
-  const [feedback, setFeedback] = useState(null); // { type: "success" | "error", text: string }
+  const [feedback, setFeedback] = useState(null);
 
   const { addExpense } = useTransactions();
 
@@ -48,8 +48,6 @@ export function ExpenseForm() {
     try {
       await addExpense(form);
       setFeedback({ type: "success", text: "¡Gasto registrado correctamente!" });
-      // Limpiamos pero mantenemos la fecha de hoy y el método de pago anterior,
-      // ya que es común registrar varios gastos del mismo día/método seguidos
       setForm((prev) => ({
         ...ESTADO_INICIAL,
         fecha: prev.fecha,
@@ -68,9 +66,7 @@ export function ExpenseForm() {
       {feedback && (
         <div
           className={`rounded-lg px-3 py-2 text-sm ${
-            feedback.type === "success"
-              ? "bg-green-50 text-green-700"
-              : "bg-red-50 text-red-600"
+            feedback.type === "success" ? "bg-green-50 text-green-700" : "bg-red-50 text-red-600"
           }`}
         >
           {feedback.text}
@@ -85,7 +81,7 @@ export function ExpenseForm() {
           value={form.concepto}
           onChange={(e) => handleChange("concepto", e.target.value)}
           required
-          className="w-full px-4 py-2.5 rounded-lg border border-gray-200 focus:outline-none focus:ring-2 focus:ring-violet-400"
+          className="w-full px-4 py-2.5 rounded-lg border border-gray-200 focus:outline-none focus:ring-2 focus:ring-red-400"
         />
       </div>
 
@@ -99,7 +95,7 @@ export function ExpenseForm() {
           value={form.monto}
           onChange={(e) => handleChange("monto", e.target.value)}
           required
-          className="w-full px-4 py-2.5 rounded-lg border border-gray-200 focus:outline-none focus:ring-2 focus:ring-violet-400"
+          className="w-full px-4 py-2.5 rounded-lg border border-gray-200 focus:outline-none focus:ring-2 focus:ring-red-400"
         />
       </div>
 
@@ -108,7 +104,7 @@ export function ExpenseForm() {
         <select
           value={form.metodoPago}
           onChange={(e) => handleChange("metodoPago", e.target.value)}
-          className="w-full px-4 py-2.5 rounded-lg border border-gray-200 focus:outline-none focus:ring-2 focus:ring-violet-400 bg-white"
+          className="w-full px-4 py-2.5 rounded-lg border border-gray-200 focus:outline-none focus:ring-2 focus:ring-red-400 bg-white"
         >
           {METODOS_PAGO.map((m) => (
             <option key={m.id} value={m.id}>
@@ -125,7 +121,7 @@ export function ExpenseForm() {
           placeholder="Ej. Starbucks Plaza Central"
           value={form.lugar}
           onChange={(e) => handleChange("lugar", e.target.value)}
-          className="w-full px-4 py-2.5 rounded-lg border border-gray-200 focus:outline-none focus:ring-2 focus:ring-violet-400"
+          className="w-full px-4 py-2.5 rounded-lg border border-gray-200 focus:outline-none focus:ring-2 focus:ring-red-400"
         />
       </div>
 
@@ -136,22 +132,19 @@ export function ExpenseForm() {
           value={form.fecha}
           onChange={(e) => handleChange("fecha", e.target.value)}
           required
-          className="w-full px-4 py-2.5 rounded-lg border border-gray-200 focus:outline-none focus:ring-2 focus:ring-violet-400"
+          className="w-full px-4 py-2.5 rounded-lg border border-gray-200 focus:outline-none focus:ring-2 focus:ring-red-400"
         />
       </div>
 
       <div>
         <label className="block text-sm font-medium text-gray-600 mb-1">Categoría</label>
-        <CategorySelector
-          value={form.categoria}
-          onChange={(value) => handleChange("categoria", value)}
-        />
+        <CategorySelector value={form.categoria} onChange={(value) => handleChange("categoria", value)} />
       </div>
 
       <button
         type="submit"
         disabled={submitting}
-        className="w-full bg-violet-600 hover:bg-violet-700 disabled:opacity-50 text-white font-semibold py-2.5 rounded-lg transition"
+        className="w-full bg-red-600 hover:bg-red-700 disabled:opacity-50 text-white font-semibold py-2.5 rounded-lg transition"
       >
         {submitting ? "Guardando..." : "Registrar gasto"}
       </button>

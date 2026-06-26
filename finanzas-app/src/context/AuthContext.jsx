@@ -7,6 +7,7 @@ import {
   signInWithPopup,
   GoogleAuthProvider,
   signOut,
+  updateProfile, 
 } from "firebase/auth";
 import { doc, getDoc, setDoc, serverTimestamp } from "firebase/firestore";
 import { auth, db } from "../firebase/config";
@@ -40,22 +41,25 @@ export function AuthProvider({ children }) {
         currency: "MXN",
         createdAt: serverTimestamp(),
         categories: [
-          { id: "alimentacion", nombre: "Alimentación", icono: "🍔", color: "#FF6B6B" },
-          { id: "transporte", nombre: "Transporte", icono: "🚗", color: "#4ECDC4" },
-          { id: "ocio", nombre: "Ocio", icono: "🎮", color: "#FFD93D" },
-          { id: "servicios", nombre: "Servicios", icono: "💡", color: "#6C5CE7" },
-          { id: "salud", nombre: "Salud", icono: "🏥", color: "#00B894" },
-          { id: "otros", nombre: "Otros", icono: "📦", color: "#95A5A6" },
-        ],
+          { id: "alimentacion", nombre: "Alimentación", color: "#FF6B6B" },
+          { id: "transporte", nombre: "Transporte", color: "#4ECDC4" },
+          { id: "ocio", nombre: "Ocio", color: "#FFD93D" },
+          { id: "servicios", nombre: "Servicios", color: "#6C5CE7" },
+          { id: "salud", nombre: "Salud", color: "#00B894" },
+          { id: "otros", nombre: "Otros", color: "#95A5A6" },
+        ],    
       });
     }
   }
 
-  async function registerWithEmail(email, password) {
-    const credential = await createUserWithEmailAndPassword(auth, email, password);
-    await ensureUserDocument(credential.user);
-    return credential.user;
+async function registerWithEmail(email, password, nombre) {
+  const credential = await createUserWithEmailAndPassword(auth, email, password);
+  if (nombre?.trim()) {
+    await updateProfile(credential.user, { displayName: nombre.trim() });
   }
+  await ensureUserDocument(credential.user);
+  return credential.user;
+}
 
   async function loginWithEmail(email, password) {
     const credential = await signInWithEmailAndPassword(auth, email, password);

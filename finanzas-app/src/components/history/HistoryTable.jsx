@@ -1,5 +1,6 @@
 // src/components/history/HistoryTable.jsx
 import { useState, useMemo } from "react";
+import { ConfirmModal } from "../common/ConfirmModal";
 import { useHistory } from "../../hooks/useHistory";
 import { useUserProfile } from "../../hooks/useUserProfile";
 import { EditableCell } from "./EditableCell";
@@ -27,6 +28,7 @@ export function HistoryTable() {
   const { profile } = useUserProfile();
   const [busqueda, setBusqueda] = useState("");
   const [filtroTipo, setFiltroTipo] = useState("todos");
+  const [registroAEliminar, setRegistroAEliminar] = useState(null);
 
   const categoriaOptions = useMemo(
     () => (profile?.categories || []).map((c) => ({ id: c.id, label: c.nombre })),
@@ -44,12 +46,14 @@ export function HistoryTable() {
     });
   }, [records, busqueda, filtroTipo]);
 
-  async function handleDelete(record) {
-    const confirmado = window.confirm(
-      `¿Eliminar "${record.concepto}" (${record.tipo === "gasto" ? "-" : "+"}$${record.monto})?`
-    );
-    if (confirmado) {
-      await deleteRecord(record);
+  function handleDeleteClick(record) {
+    setRegistroAEliminar(record);
+  }
+
+  async function confirmarEliminar() {
+    if (registroAEliminar) {
+      await deleteRecord(registroAEliminar);
+      setRegistroAEliminar(null);
     }
   }
 
@@ -153,7 +157,11 @@ export function HistoryTable() {
                   />
                 </td>
                 <td className="px-3">
-                  <button onClick={() => handleDelete(record)} className="text-gray-400 hover:text-red-500 transition" title="Eliminar">
+                  <button
+                    onClick={() => handleDeleteClick(record)}
+                    className="text-gray-400 hover:text-red-500 transition"
+                    title="Eliminar"
+                  >
                     <Trash2 size={16} />
                   </button>
                 </td>
@@ -161,6 +169,19 @@ export function HistoryTable() {
             ))}
           </tbody>
         </table>
+        
+        <ConfirmModal
+          open={!!registroAEliminar}
+          title="¿Eliminar este registro?"
+          message={
+            registroAEliminar
+              ? `Vas a eliminar "${registroAEliminar.concepto}" por $${registroAEliminar.monto}. Esta acción no se puede deshacer.`
+              : ""
+          }
+          confirmLabel="Eliminar"
+          onConfirm={confirmarEliminar}
+          onCancel={() => setRegistroAEliminar(null)}
+        />
 
         {recordsFiltrados.length === 0 && (
           <p className="text-center text-gray-400 py-8">No hay registros que coincidan.</p>

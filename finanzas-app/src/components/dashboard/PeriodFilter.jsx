@@ -16,7 +16,7 @@ export function PeriodFilter({ periodo, fechaReferencia, onPeriodoChange, onNave
       <select
         value={periodo}
         onChange={(e) => onPeriodoChange(e.target.value)}
-        className="px-4 py-2 rounded-lg border border-gray-200 focus:outline-none focus:ring-2 focus:ring-violet-400 bg-white font-medium"
+        className="px-4 py-2 rounded-lg border border-gray-200 ring-primary bg-white font-medium"
       >
         {PERIODOS.map((p) => (
           <option key={p.id} value={p.id}>
@@ -28,7 +28,7 @@ export function PeriodFilter({ periodo, fechaReferencia, onPeriodoChange, onNave
       <div className="flex items-center gap-2 bg-white rounded-lg border border-gray-200 px-2 py-1">
         <button
           onClick={() => onNavegar(-1)}
-          className="px-2 py-1 text-gray-500 hover:text-violet-600 transition"
+          className="px-2 py-1 text-gray-500 hover:text-primary transition"
           aria-label="Periodo anterior"
         >
           ←
@@ -38,7 +38,7 @@ export function PeriodFilter({ periodo, fechaReferencia, onPeriodoChange, onNave
         </span>
         <button
           onClick={() => onNavegar(1)}
-          className="px-2 py-1 text-gray-500 hover:text-violet-600 transition"
+          className="px-2 py-1 text-gray-500 hover:text-primary transition"
           aria-label="Periodo siguiente"
         >
           →

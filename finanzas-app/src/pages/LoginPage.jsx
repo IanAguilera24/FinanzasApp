@@ -5,6 +5,7 @@ import { useAuth } from "../context/AuthContext";
 
 export function LoginPage() {
   const [isRegister, setIsRegister] = useState(false);
+  const [nombre, setNombre] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
@@ -19,7 +20,7 @@ export function LoginPage() {
     setSubmitting(true);
     try {
       if (isRegister) {
-        await registerWithEmail(email, password);
+        await registerWithEmail(email, password, nombre);
       } else {
         await loginWithEmail(email, password);
       }
@@ -45,7 +46,7 @@ export function LoginPage() {
   }
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-violet-50 to-indigo-100 px-4">
+    <div className="min-h-screen flex items-center justify-center bg-gray-50 px-4">
       <div className="bg-white rounded-2xl shadow-xl p-8 w-full max-w-sm">
         <h1 className="text-2xl font-bold text-center text-gray-800 mb-1">
           {isRegister ? "Crea tu cuenta" : "Bienvenido de nuevo"}
@@ -61,27 +62,38 @@ export function LoginPage() {
         )}
 
         <form onSubmit={handleSubmit} className="space-y-4">
+          {isRegister && (
+            <input
+              type="text"
+              placeholder="Tu nombre"
+              value={nombre}
+              onChange={(e) => setNombre(e.target.value)}
+              required
+              className="w-full px-4 py-2.5 rounded-lg border border-gray-200 ring-primary"
+            />
+          )}
           <input
             type="email"
             placeholder="Correo electrónico"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             required
-            className="w-full px-4 py-2.5 rounded-lg border border-gray-200 focus:outline-none focus:ring-2 focus:ring-violet-400"
+            className="w-full px-4 py-2.5 rounded-lg border border-gray-200 ring-primary"
           />
           <input
             type="password"
             placeholder="Contraseña"
+            autoComplete={isRegister ? "new-password" : "current-password"}
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             required
             minLength={6}
-            className="w-full px-4 py-2.5 rounded-lg border border-gray-200 focus:outline-none focus:ring-2 focus:ring-violet-400"
+            className="w-full px-4 py-2.5 rounded-lg border border-gray-200 ring-primary"
           />
           <button
             type="submit"
             disabled={submitting}
-            className="w-full bg-violet-600 hover:bg-violet-700 disabled:opacity-50 text-white font-semibold py-2.5 rounded-lg transition"
+            className="btn-primary w-full disabled:opacity-50 font-semibold py-2.5 rounded-lg transition"
           >
             {submitting ? "Procesando..." : isRegister ? "Registrarme" : "Iniciar sesión"}
           </button>
@@ -104,10 +116,7 @@ export function LoginPage() {
 
         <p className="text-center text-sm text-gray-500 mt-6">
           {isRegister ? "¿Ya tienes cuenta?" : "¿Aún no tienes cuenta?"}{" "}
-          <button
-            onClick={() => setIsRegister(!isRegister)}
-            className="text-violet-600 font-medium hover:underline"
-          >
+          <button onClick={() => setIsRegister(!isRegister)} className="text-primary font-medium hover:underline">
             {isRegister ? "Inicia sesión" : "Regístrate"}
           </button>
         </p>

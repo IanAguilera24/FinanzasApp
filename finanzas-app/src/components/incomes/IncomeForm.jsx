@@ -66,9 +66,7 @@ export function IncomeForm() {
       {feedback && (
         <div
           className={`rounded-lg px-3 py-2 text-sm ${
-            feedback.type === "success"
-              ? "bg-green-50 text-green-700"
-              : "bg-red-50 text-red-600"
+            feedback.type === "success" ? "bg-green-50 text-green-700" : "bg-red-50 text-red-600"
           }`}
         >
           {feedback.text}

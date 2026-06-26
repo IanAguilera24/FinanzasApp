@@ -18,17 +18,23 @@ export function BalanceLineChart({ evolucionBalance, modoBalance, onModoChange }
         <div className="flex gap-1 bg-gray-100 rounded-lg p-1">
           <button
             onClick={() => onModoChange("periodo")}
-            className={`text-xs px-3 py-1 rounded-md transition ${
-              modoBalance === "periodo" ? "bg-white shadow-sm font-medium text-violet-600" : "text-gray-500"
-            }`}
+            className="text-xs px-3 py-1 rounded-md transition font-medium"
+            style={
+              modoBalance === "periodo"
+                ? { backgroundColor: "white", boxShadow: "0 1px 2px rgba(0,0,0,0.05)", color: "var(--color-primary)" }
+                : { color: "#6b7280" }
+            }
           >
             Por día
           </button>
           <button
             onClick={() => onModoChange("acumulado")}
-            className={`text-xs px-3 py-1 rounded-md transition ${
-              modoBalance === "acumulado" ? "bg-white shadow-sm font-medium text-violet-600" : "text-gray-500"
-            }`}
+            className="text-xs px-3 py-1 rounded-md transition font-medium"
+            style={
+              modoBalance === "acumulado"
+                ? { backgroundColor: "white", boxShadow: "0 1px 2px rgba(0,0,0,0.05)", color: "var(--color-primary)" }
+                : { color: "#6b7280" }
+            }
           >
             Acumulado
           </button>
@@ -40,7 +46,7 @@ export function BalanceLineChart({ evolucionBalance, modoBalance, onModoChange }
           <XAxis dataKey="fecha" tick={{ fontSize: 12 }} />
           <YAxis tick={{ fontSize: 12 }} />
           <Tooltip formatter={(value) => formatMoneda(value)} />
-          <Line type="monotone" dataKey="balance" stroke="#7c3aed" strokeWidth={2} dot={{ r: 3 }} />
+          <Line type="monotone" dataKey="balance" stroke="var(--color-primary)" strokeWidth={2} dot={{ r: 3 }} />
         </LineChart>
       </ResponsiveContainer>
     </div>

@@ -17,16 +17,21 @@ export function TabBar() {
             key={to}
             to={to}
             end={to === "/"}
-            className={({ isActive }) =>
-              `flex flex-col items-center md:flex-row md:gap-2 px-3 py-1.5 rounded-lg text-xs md:text-sm font-medium transition ${
-                isActive
-                  ? "text-violet-600 bg-violet-50"
-                  : "text-gray-500 hover:text-violet-500"
-              }`
-            }
+            className="flex flex-col items-center md:flex-row md:gap-2 px-3 py-1.5 rounded-lg text-xs md:text-sm font-medium transition text-gray-500 hover:opacity-80 [&.active]:font-semibold"
           >
-            <Icon size={20} strokeWidth={2} />
-            <span>{label}</span>
+            {({ isActive }) => (
+              <span
+                className="flex flex-col items-center md:flex-row md:gap-2"
+                style={
+                  isActive
+                    ? { color: "var(--color-primary)" }
+                    : undefined
+                }
+              >
+                <Icon size={20} strokeWidth={2} />
+                <span>{label}</span>
+              </span>
+            )}
           </NavLink>
         ))}
       </div>
