@@ -80,3 +80,67 @@ export function useTransactions() {
 
   return { transactions: data, loading, error, addExpense, updateExpense, deleteExpense };
 }
+
+async function addExpense({
+  concepto, monto, metodoPago, lugar, fecha,
+  categoria, notas, recurrente,
+  esMSI, msiMeses, msiFechaInicio,
+}) {
+  if (!user) throw new Error("No hay usuario autenticado");
+  const fechaObj = parsearFechaLocal(fecha);
+  const ref = collection(db, "users", user.uid, "transactions");
+
+  const ahora = new Date();
+  const vencimiento = recurrente
+    ? new Date(ahora.getFullYear() + 1, ahora.getMonth(), ahora.getDate())
+    : null;
+
+  // Campos MSI
+  let camposMSI = {
+    msi: false,
+    msiMeses: null,
+    msiMontoPorMes: null,
+    msiFechaInicio: null,
+    msiFechaFin: null,
+  };
+
+  if (esMSI && msiMeses && msiFechaInicio && metodoPago === "tarjeta_credito") {
+    const fechaInicioMSI = parsearFechaLocal(msiFechaInicio);
+    const fechaFinMSI = new Date(
+      fechaInicioMSI.getFullYear(),
+      fechaInicioMSI.getMonth() + Number(msiMeses),
+      fechaInicioMSI.getDate()
+    );
+    camposMSI = {
+      msi: true,
+      msiMeses: Number(msiMeses),
+      msiMontoPorMes: Number((monto / msiMeses).toFixed(2)),
+      msiFechaInicio: fechaInicioMSI,
+      msiFechaFin: fechaFinMSI,
+    };
+  }
+
+  await addDoc(ref, {
+    concepto,
+    monto: Number(monto),
+    metodoPago,
+    lugar,
+    categoria,
+    fecha: fechaObj,
+    fechaCreacion: serverTimestamp(),
+    anio: fechaObj.getFullYear(),
+    mes: fechaObj.getMonth() + 1,
+    diaSemana: fechaObj.getDay(),
+    origen: "manual",
+    autollenado: false,
+    imagenTicketUrl: null,
+    datosOCRConfianza: null,
+    notas: notas || "",
+    recurrente: Boolean(recurrente),
+    fechaInicioRecurrencia: recurrente ? ahora : null,
+    fechaVencimientoRecurrencia: vencimiento,
+    estadoRecurrencia: recurrente ? "activo" : null,
+    alertaDescartadaHasta: null,
+    ...camposMSI,
+  });
+}

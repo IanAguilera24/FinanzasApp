@@ -145,15 +145,21 @@ export function HistoryTable() {
             {recordsFiltrados.map((record) => (
               <tr key={`${record.tipo}-${record.id}`} className="border-b border-gray-50 dark:border-slate-700/50 hover:bg-gray-50/50 dark:hover:bg-slate-700/30">
                 <td className="px-3 py-1">
-                  <span
-                    className={`text-xs font-semibold px-2 py-1 rounded-full ${
-                      record.tipo === "gasto"
-                        ? "bg-red-50 dark:bg-red-900/30 text-red-600 dark:text-red-300"
-                        : "bg-emerald-50 dark:bg-emerald-900/30 text-emerald-600 dark:text-emerald-300"
-                    }`}
-                  >
-                    {record.tipo === "gasto" ? "Gasto" : "Ingreso"}
-                  </span>
+                  <div className="flex flex-col gap-1">
+                    <span
+                      className={`text-xs font-semibold px-2 py-1 rounded-full w-fit ${record.tipo === "gasto"
+                          ? "bg-red-50 dark:bg-red-900/30 text-red-600 dark:text-red-300"
+                          : "bg-emerald-50 dark:bg-emerald-900/30 text-emerald-600 dark:text-emerald-300"
+                        }`}
+                    >
+                      {record.tipo === "gasto" ? "Gasto" : "Ingreso"}
+                    </span>
+                    {record.msi && (
+                      <span className="text-xs px-2 py-0.5 rounded-full bg-blue-50 dark:bg-blue-900/30 text-blue-600 dark:text-blue-300 w-fit">
+                        MSI {record.msiMeses}m · ${record.msiMontoPorMes?.toFixed(2)}/mes
+                      </span>
+                    )}
+                  </div>
                 </td>
                 <td className="px-1">
                   <EditableCell value={record.concepto} onSave={(val) => updateRecord(record, { concepto: val })} />

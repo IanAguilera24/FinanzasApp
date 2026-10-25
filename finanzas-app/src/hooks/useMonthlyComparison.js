@@ -2,6 +2,7 @@
 import { useMemo } from "react";
 import { useTransactions } from "./useTransactions";
 import { useIncomes } from "./useIncomes";
+import { montoMSIEnMes } from "../utils/msiUtils";
 
 function aFecha(timestamp) {
   return timestamp?.toDate ? timestamp.toDate() : new Date(timestamp);
@@ -17,7 +18,6 @@ export function useMonthlyComparison(mesesAtras = 12) {
     const hoy = new Date();
     const meses = [];
 
-    // Genera los últimos N meses, del más antiguo al más reciente
     for (let i = mesesAtras - 1; i >= 0; i--) {
       const fecha = new Date(hoy.getFullYear(), hoy.getMonth() - i, 1);
       meses.push({
@@ -32,9 +32,17 @@ export function useMonthlyComparison(mesesAtras = 12) {
     const buscarMes = (anio, mes) => meses.find((m) => m.anio === anio && m.mes === mes);
 
     transactions.forEach((t) => {
-      const f = aFecha(t.fecha);
-      const entrada = buscarMes(f.getFullYear(), f.getMonth() + 1);
-      if (entrada) entrada.gastos += t.monto;
+      if (t.msi) {
+        // Distribuye msiMontoPorMes en cada mes que corresponda
+        meses.forEach((m) => {
+          const montoMes = montoMSIEnMes(t, m.anio, m.mes);
+          if (montoMes > 0) m.gastos += montoMes;
+        });
+      } else {
+        const f = aFecha(t.fecha);
+        const entrada = buscarMes(f.getFullYear(), f.getMonth() + 1);
+        if (entrada) entrada.gastos += t.monto;
+      }
     });
 
     incomes.forEach((i) => {
@@ -46,8 +54,5 @@ export function useMonthlyComparison(mesesAtras = 12) {
     return meses;
   }, [transactions, incomes, mesesAtras]);
 
-  return {
-    loading: loadingGastos || loadingIngresos,
-    datos,
-  };
+  return { loading: loadingGastos || loadingIngresos, datos };
 }
