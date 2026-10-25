@@ -18,6 +18,7 @@ const ESTADO_INICIAL = {
   lugar: "",
   fecha: fechaLocalISO(),
   categoria: "",
+  recurrente: false,
 };
 
 const inputClass =
@@ -68,11 +69,10 @@ export function ExpenseForm() {
     <form onSubmit={handleSubmit} className="bg-white dark:bg-slate-800 rounded-2xl shadow-sm p-6 max-w-md mx-auto space-y-4">
       {feedback && (
         <div
-          className={`rounded-lg px-3 py-2 text-sm ${
-            feedback.type === "success"
+          className={`rounded-lg px-3 py-2 text-sm ${feedback.type === "success"
               ? "bg-green-50 dark:bg-green-900/30 text-green-700 dark:text-green-300"
               : "bg-red-50 dark:bg-red-900/30 text-red-600 dark:text-red-300"
-          }`}
+            }`}
         >
           {feedback.text}
         </div>
@@ -145,6 +145,16 @@ export function ExpenseForm() {
         <label className="block text-sm font-medium text-gray-600 dark:text-slate-300 mb-1">Categoría</label>
         <CategorySelector value={form.categoria} onChange={(value) => handleChange("categoria", value)} />
       </div>
+
+      <label className="flex items-center gap-2 text-sm text-gray-600 dark:text-slate-300">
+        <input
+          type="checkbox"
+          checked={form.recurrente}
+          onChange={(e) => handleChange("recurrente", e.target.checked)}
+          className="w-4 h-4 rounded border-gray-300 dark:border-slate-600 text-red-600 focus:ring-red-400"
+        />
+        Este es un gasto recurrente (suscripción, servicio mensual, etc.)
+      </label>
 
       <button
         type="submit"
