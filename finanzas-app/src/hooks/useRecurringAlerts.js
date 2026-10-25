@@ -2,7 +2,7 @@
 import { useMemo } from "react";
 import { doc, updateDoc } from "firebase/firestore";
 import { db } from "../firebase/config";
-import { useAuth } from "./useAuth";
+import { useAuth } from "../context/AuthContext";
 import { useTransactions } from "./useTransactions";
 import { useIncomes } from "./useIncomes";
 
